@@ -1,0 +1,57 @@
+#+title: H-99 Questions 1 through 10: Lists
+#+author: Daniel Ibanescu
+#+OPTIONS: num:nil
+
+* Problem 1: Find the last element of a list
+This is a function found in the Haskell base package as ~last~
+** Naive Recursion
+If we put on our recursive thinking cap, we can simply break the problem down into 3 cases:
+1. Empty List (invalid input)
+2. Single (Last) Element (base case)
+3. Not last Element
+#+begin_src haskell :tangle Solutions/p1.hs :exports code :results silent
+-- myLast :: [a] -> a
+myLast [] = error "Empty list has no last element!"
+myLast [x] = x
+myLast (_: xs) = myLast xs
+#+end_src
+*** Tests
+#+begin_src haskell :exports results :results output
+:l Solutions/p1.hs
+putStrLn "Testing myLast function:"
+myLast [1,2,3,4]
+putStrLn "Testing with alphabet:"
+myLast ['a'..'z']
+#+end_src
+
+
+#+RESULTS:
+: [1 of 2] Compiling Main             ( Solutions/p1.hs, interpreted )
+: Ok, one module loaded.
+: Testing myLast function:
+: 4
+: Testing with alphabet:
+: 'z'
+
+
+** Haskell-Specific
+Since Haskell base package has functions ~head~ and ~reverse~, we can call ~head~ on the ~reverse~ list and get the last element.
+#+begin_src haskell :tangle Solutions/p1.hs :exports code :results silent
+myLast' = head . reverse
+#+end_src
+*** Tests
+#+begin_src haskell :exports results :results output
+:l Solutions/p1.hs
+putStrLn "Testing myLast' function:"
+myLast' [1,2,3,4]
+putStrLn "Testing with alphabet:"
+myLast' ['a'..'z']
+#+end_src
+
+#+RESULTS:
+: [1 of 2] Compiling Main             ( Solutions/p1.hs, interpreted )
+: Ok, one module loaded.
+: Testing myLast' function:
+: 4
+: Testing with alphabet:
+: 'z'
